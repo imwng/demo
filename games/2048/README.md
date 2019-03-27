@@ -151,3 +151,26 @@ arr.calc();     // [0, 2, 0, 4, 0, 0];
 arr.calc(true); // [0, 2, 0, 0, 4, 0];
 ```
 ![相邻位运算](https://github.com/imwng/demo/blob/master/imgs/2048_calc运算.png)
+
+##### left碰撞
+> 流程:
+> 1. 向左坠落，清空位置0 [clearZero]
+> 2. 计算碰撞 [calc]
+> 3. 计算后，如果有消除一格，就会多出一格位置0，所以要再次清空0 [clearZero]
+> 4. 补齐右边的位置0
+
+```
+left操作属于map类的操作：
+class Map {
+  ...
+  left () {
+    // this 指向二维数组
+    for (let i = 0; i < this.length; i++) {
+      this[i].clearZero();
+      this[i].calc();
+      this[i].clearZero();
+      this[i].paddingZero(4);
+    }
+  }
+}
+```
