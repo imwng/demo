@@ -46,6 +46,20 @@ Array.prototype.transpose = function () {
     });
   });
 }
+
+// 修改为作用于原数组
+Array.prototype.tranpose = function () {
+  if (this.length <= 0 || !this[0].length) return this;
+  let temp = this[0].map((col, i) => {
+    return this.map(row => {
+      return row[i];
+    });
+  });
+  for (let i = 0; i < temp.length; i++) {
+    this[i] = temp[i];
+  }
+  this.length = temp.length;
+}
 ```
 ![二维数组转置](https://github.com/imwng/demo/blob/master/imgs/2048_转置.png)
 
@@ -171,6 +185,47 @@ class Map {
       this[i].clearZero();
       this[i].paddingZero(4);
     }
+  }
+}
+```
+> 其他方向的碰撞类似，需要注意方向，以及垂直方向上做二维数组的转置，然后可以抽出一部分公共方法，比如起名drop
+
+```
+class Map {
+  ...
+  drop (direction = 'left') {
+    let reverse;
+    switch (direction) {
+      case 'left':
+        reverse = false;
+        needTranspose = false;
+        break;
+      case 'right':
+        reverse = true;
+        needTranspose = false;
+        break;
+      case 'up':
+        reverse = true;
+        needTranspose = true;
+        break;
+      case 'down':
+        reverse = false;
+        needTranspose = true;
+        break;
+    }
+    // 二维数组转置
+    this.transpose();
+    for (let i = 0; i < this.length; i++) {
+      this[i].clearZero(reverse);
+      this[i].calc(reverse);
+      this[i].clearZero(reverse);
+      this[i].paddingZero(4, reverse);
+    }
+    // 转置回来
+    this.transpose();
+  }
+  left () {
+    this.drop('left');
   }
 }
 ```
