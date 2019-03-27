@@ -4,10 +4,9 @@
 > * 通过方向键控制所有方块下落方向
 > * 下落过程中，相同方块数值消掉后生成一个(*2)值的新方块
 
-整体过程：
-![](https://github.com/imwng/demo/blob/master/imgs/2048.png)
+![整体过程](https://github.com/imwng/demo/blob/master/imgs/2048.png)
 
-开发流程：
+### 开发流程：
 1. 设计开发处理器[渲染器]，功能是将二维数组渲染到canvas
 2. 二维数据状态的变更
 
@@ -37,3 +36,4 @@ for (var i = 0; i < arr[0].length; i++) {
   }
 }
 ```
+![二维数组转置](https://github.com/imwng/demo/blob/master/imgs/2048_转置.png)
