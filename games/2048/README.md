@@ -67,13 +67,35 @@ Array.prototype.transpose = function () {
 > 3. 右边补齐0，[1, 3, 0, 0]
 
 ```
+数组清空0元素：
+Array.prototype.clearZero = function () {
+  let temp = this.filter(item => {
+    return item != 0;
+  });
+  // this 不能显式赋值
+  for (let i = 0; i < temp.length; i++) {
+    this[i] = temp[i];
+  }
+  this.length = temp.length;
+}
+
+// 对原数组做修改：
+// 1. this数组元素修改
+// 2. 控制数组长度
+```
+
+```
 数组补0：
 // 第一种方式：
 Array.prototype.paddingZero = function (length, reverse = false) {
   if (length < this.length) return this;
   let minus = length - this.length;
   let padding = ('0').repeat(minus).split('');
-  return reverse ? padding.concat(this) : this.concat(padding);
+  let temp = reverse ? padding.concat(this) : this.concat(padding);
+  for (let i = 0; i < temp.length; i++) {
+    this[i] = temp[i];
+  }
+  this.length = temp.length;
 }
 
 // 用字符串的repeat方法，感觉上写法更直观，用while循环填充0，还要判断reverse，感觉代码重复过多，如下：
@@ -89,8 +111,12 @@ Array.prototype.paddingZero = function (length, reverse = false) {
       this.unshift(0);
     }
   }
-  return this;
+  // 直接作用于原数组
 }
 
-第一种方式的缺点是，0是字符串类型的，问题不大，做判断的时候用 !=
+第一种方式的缺点是，0是字符串类型的，问题不大，做判断的时候用 != 或者加一步映射：
+temp = temp.map(item => {
+ 	return parseInt(item);
+});
+// 稍微浪费点运算性能，但是对于这个游戏而言，本来计算量就不大，也没啥关系。
 ```
