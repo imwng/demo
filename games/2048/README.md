@@ -205,16 +205,17 @@ class Map {
         needTranspose = false;
         break;
       case 'up':
-        reverse = true;
+        reverse = false;
         needTranspose = true;
         break;
       case 'down':
-        reverse = false;
+        reverse = true;
         needTranspose = true;
         break;
     }
     // 二维数组转置
-    this.transpose();
+    if (needTranspose) this.needTranspose();
+    
     for (let i = 0; i < this.length; i++) {
       this[i].clearZero(reverse);
       this[i].calc(reverse);
@@ -222,10 +223,14 @@ class Map {
       this[i].paddingZero(4, reverse);
     }
     // 转置回来
-    this.transpose();
+    if (needTranspose) this.needTranspose();
   }
   left () {
     this.drop('left');
   }
 }
+
+// 转置的作用：
+// 将down操作 → right操作
+// 将up操作 → left操作
 ```
