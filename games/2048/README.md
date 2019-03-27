@@ -234,3 +234,7 @@ class Map {
 // 将down操作 → right操作
 // 将up操作 → left操作
 ```
+
+##### 转置和逆序的作用
+![](https://github.com/imwng/demo/blob/master/imgs/2048_drop.png)
+
