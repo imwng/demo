@@ -50,7 +50,7 @@ Array.prototype.transpose = function () {
 ![二维数组转置](https://github.com/imwng/demo/blob/master/imgs/2048_转置.png)
 
 
-#### 边界碰撞
+#### 边界碰撞 [二维数组的状态变更]
 > 二维数组在行|列方向上做0判断：
 > * 向左向右 => 行判断，同一行是否存在多个0，存在，删除全部0的位置，逆方向上补0
 > * 向上向下 => 列判断，同一列是否存在多个0，存在，删除全部0的位置，逆方向上补0
@@ -120,3 +120,34 @@ temp = temp.map(item => {
 });
 // 稍微浪费点运算性能，但是对于这个游戏而言，本来计算量就不大，也没啥关系。
 ```
+
+```
+数组相邻位相同值计算：
+Array.prototype.calc = function (reverse = false) {
+  // 默认指针从左边开始
+  temp = reverse ? this.reverse() : this;
+  for (let i = 0; i < temp.length-1; ) {
+    if (temp[i] === temp[i+1]) {
+      // 相邻位相同
+      temp[i] *= 2;
+      temp[i+1] = 0;
+      i += 2;
+    } else {
+      i++;
+    }
+  }
+  temp = reverse ? temp.reverse() : temp;
+  for (let i = 0; i < temp.length; i++) {
+    this[i] = temp[i];
+  }
+  this.length = temp.length;
+}
+
+// 先reverse数组，总比两个for循环要好吧，两个for循环，一个正向，一个逆向遍历，想想都烦。
+
+// 正向、逆向的区别:
+var arr = [0, 2, 0, 2, 2, 0];
+arr.calc();     // [0, 2, 0, 4, 0, 0];
+arr.calc(true); // [0, 2, 0, 0, 4, 0];
+```
+![相邻位运算](https://github.com/imwng/demo/blob/master/imgs/2048_calc运算.png)
