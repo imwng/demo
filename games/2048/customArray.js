@@ -43,3 +43,26 @@ Array.prototype.paddingZero = function (length, reverse = false) {
   });
   this.length = temp.length;
 }
+
+/**
+ * 一维数组相邻位相同值计算
+ * @return 无返回，作用于原数组
+ */
+Array.prototype.calc = function () {
+  let temp = reverse ? this.reverse() : this;
+  for (let i = 0; i < temp.length - 1; ) {
+    if (temp[i] === temp[i+1]) {
+      // 相邻位相同值运算
+      temp[i] *= 2;
+      temp[i+1] = 0;
+      i += 2;
+    } else {
+      i++;
+    }
+  }
+  temp = reverse ? temp.reverse() : temp;
+  temp.forEach((item, index) => {
+    this[index] = item;
+  });
+  this.length = temp.length;
+}
