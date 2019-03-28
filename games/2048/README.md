@@ -194,7 +194,7 @@ class Map {
 class Map {
   ...
   drop (direction = 'left') {
-    let reverse;
+    let reverse, needTranspose;
     switch (direction) {
       case 'left':
         reverse = false;
@@ -214,7 +214,7 @@ class Map {
         break;
     }
     // 二维数组转置
-    if (needTranspose) this.needTranspose();
+    if (needTranspose) this.transpose();
     
     for (let i = 0; i < this.length; i++) {
       this[i].clearZero(reverse);
@@ -223,7 +223,7 @@ class Map {
       this[i].paddingZero(4, reverse);
     }
     // 转置回来
-    if (needTranspose) this.needTranspose();
+    if (needTranspose) this.transpose();
   }
   left () {
     this.drop('left');
