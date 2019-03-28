@@ -238,3 +238,42 @@ class Map {
 ##### 转置和逆序的作用
 ![](https://github.com/imwng/demo/blob/master/imgs/2048_drop.png)
 
+##### 生成随机位置
+> 每一次碰撞后，会增加一个2。
+
+```
+class Map {
+  ...
+  next () {
+    // 1. 展平 二维 -> 一维
+    let temp = this.flat();
+    let posArr = [];
+    temp.forEach((item, index) => {
+      if (item === 0) {
+        posArr.push(index);
+      }
+    });
+    
+    // 一维数组的index和二维数组的i,j之间存在联系
+    // i = parseInt(index / 4);
+    // j = index % 4;
+    // 4 是二维数组的长宽
+    
+    // 2. 随机选择一个位置为0的空格
+    let rand = Math.floor(Math.random() * posArr.length);
+    let pos = posArr[rand];
+    let i = parseInt(pos / 4);
+    let j = pos % 4;
+    this[i][j] = 2;
+  }
+}
+
+// 判断数组里是否还有0元素
+Array.prototype.hasZero = function () {
+  // 展平
+  let temp = this.join(',').split(',').map(item => {
+    return ~~item;
+  });
+  return temp.indexOf(0) !== -1;
+}
+```
